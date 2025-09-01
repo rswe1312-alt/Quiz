@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🌟 Workplace Love Language Quiz 🌟</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f8ff; padding: 20px; }
+        h1 { color: #333; }
+        .question { margin-bottom: 20px; padding: 10px; background-color: #e6f7ff; border-radius: 8px; }
+        .options label { display: block; margin: 5px 0; }
+        .submit-btn { padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .result { margin-top: 20px; padding: 15px; background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 8px; }
+        .error { color: red; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>🌟 Workplace Love Language Quiz 🌟</h1>
+    <form id="quizForm">
+        <div class="question" id="q1">
+            <strong>1️⃣ When you’ve done a great job, what makes you feel most appreciated?</strong>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A"> A. 💬 A heartfelt “thank you” or praise</label>
+                <label><input type="radio" name="q1" value="B"> B. 🎁 A small gift or token</label>
+                <label><input type="radio" name="q1" value="C"> C. 🕒 Time spent helping me grow</label>
+                <label><input type="radio" name="q1" value="D"> D. 🤝 Help with my workload</label>
+                <label><input type="radio" name="q1" value="E"> E. 👋 A warm handshake or high-five</label>
+            </div>
+        </div>
+        <div class="question" id="q2">
+            <strong>2️⃣ What motivates you to go the extra mile at work?</strong>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A"> A. 🗣️ Public recognition</label>
+                <label><input type="radio" name="q2" value="B"> B. 💵 Thoughtful reward</label>
+                <label><input type="radio" name="q2" value="C"> C. 👥 Mentoring or coaching</label>
+                <label><input type="radio" name="q2" value="D"> D. 🧰 Support during stress</label>
+                <label><input type="radio" name="q2" value="E"> E. ✋ Friendly physical gestures</label>
+            </div>
+        </div>
+        <div class="question" id="q3">
+            <strong>3️⃣ How do you prefer to show appreciation to others?</strong>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> A. 👍 Giving compliments</label>
+                <label><input type="radio" name="q3" value="B"> B. 🍪 Giving treats</label>
+                <label><input type="radio" name="q3" value="C"> C. 📚 Helping them grow</label>
+                <label><input type="radio" name="q3" value="D"> D. 🧹 Helping with tasks</label>
+                <label><input type="radio" name="q3" value="E"> E. 🤗 Reassuring touch</label>
+            </div>
+        </div>
+        <div class="question" id="q4">
+            <strong>4️⃣ What makes you feel most connected to your team?</strong>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> A. 💬 Encouraging communication</label>
+                <label><input type="radio" name="q4" value="B"> B. 🎉 Celebrating milestones</label>
+                <label><input type="radio" name="q4" value="C"> C. 📅 Regular check-ins</label>
+                <label><input type="radio" name="q4" value="D"> D. 🧑‍🤝‍🧑 Helping during crunch</label>
+                <label><input type="radio" name="q4" value="E"> E. 🤝 Friendly interactions</label>
+            </div>
+        </div>
+        <div class="question" id="q5">
+            <strong>5️⃣ If you’re having a tough day, what would lift your spirits?</strong>
+            <div class="options">
+                <label><input type="radio" name="q5" value="A"> A. 💖 “I appreciate you”</label>
+                <label><input type="radio" name="q5" value="B"> B. ☕ Surprise coffee</label>
+                <label><input type="radio" name="q5" value="C"> C. 👂 Someone listening</label>
+                <label><input type="radio" name="q5" value="D"> D. 🧾 Help with a task</label>
+                <label><input type="radio" name="q5" value="E"> E. 👋 Pat on the back</label>
+            </div>
+        </div>
+        <button type="button" class="submit-btn" onclick="calculateResult()">Submit</button>
+    </form>
+    <div id="errorMsg" class="error"></div>
+    <div id="result" class="result"></div>
+
+    <script>
+        function calculateResult() {
+            const answers = ['q1', 'q2', 'q3', 'q4', 'q5'];
+            const counts = { A: 0, B: 0, C: 0, D: 0, E: 0 };
+            const missed = [];
+
+            answers.forEach(q => {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected) {
+                    counts[selected.value]++;
+                } else {
+                    missed.push(q);
+                }
+            });
+
+            const errorDiv = document.getElementById("errorMsg");
+            const resultDiv = document.getElementById("result");
+            errorDiv.innerHTML = "";
+            resultDiv.innerHTML = "";
+
+            if (missed.length > 0) {
+                errorDiv.innerHTML = "⚠️ Please answer all questions. You missed: " + missed.map(q => q.toUpperCase()).join(", ");
+                return;
+            }
+
+            const max = Math.max(...Object.values(counts));
+            const dominant = Object.keys(counts).find(key => counts[key] === max);
+
+            const messages = {
+                A: "💬 <strong>Words of Affirmation</strong>: You thrive on verbal encouragement and recognition.",
+                B: "🎁 <strong>Gifts</strong>: Thoughtful tokens make you feel seen and valued.",
+                C: "🕒 <strong>Quality Time</strong>: You appreciate undivided attention and meaningful conversations.",
+                D: "🤝 <strong>Acts of Service</strong>: You feel most cared for when others lend a helping hand.",
+                E: "👋 <strong>Physical Touch</strong>: You value appropriate physical gestures like handshakes and pats on the back."
+            };
+
+            resultDiv.innerHTML = "💡 Your dominant workplace love language is:<br>" + messages[dominant];
+        }
+    </script>
+</body>
+</html>
